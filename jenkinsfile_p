@@ -5,37 +5,34 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building the application...'
+                echo 'Building the application'
                 
             }
         }
 
-        stage('Test and Deploy') {
+        stage('Test Parallel') {
             parallel {
                 stage('Test') {
                     steps {
-                        echo 'Running tests...'
-                       
+                        echo ' Running tests'
+                        
                     }
                 }
 
-                stage('Deploy') {
+                stage('Test_SIT') {
                     steps {
-                        echo 'Deploying the application...'
-                        
+                        echo 'Running SIT tests'
+                       
                     }
                 }
             }
         }
-
-    }
-
-    post {
-        success {
-            echo '✅ Pipeline completed successfully.'
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application'
+                
+            }
         }
-        failure {
-            echo '❌ Pipeline failed.'
-        }
+
     }
 }
